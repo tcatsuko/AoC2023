@@ -85,7 +85,7 @@ for location in gears:
     if len(parts) == 2:
         gear_ratios += [int(parts[0]) * int(parts[1])]
 print('Part 2: sum of gear ratios is ' + str(sum(gear_ratios)))
-# Now for part 2
+
 
     
 

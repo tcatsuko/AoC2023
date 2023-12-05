@@ -176,48 +176,21 @@ def check_overlap(range1, range2):
     y1 = range2[0]
     y2 = range2[1]
     return (x2 >= y1) and (x1 <= y2)
-def split_ranges(source, dest, start_map):
-    x1 = source[0]
-    x2 = source[1]
-    y1 = dest[0]
-    y2 = dest[1]
-    # x1---y1---x2---y2
-    return_range = []
-    if (x1 < y1) and (y1 < x2):
-        return_range += [(x1, y1-1)]
-        return_range += [(start_map, (x2 - y1) + start_map)]
-    # x1y1---x2---y2
-    elif (x1 == y1) and (x2 < y2):
-        return_range += [(start_map, start_map + x2-x1)]
-    # x1---y1---x2y2
-    elif (x1 < y1) and (x2 == y2):
-        return_range += [(x1, y1-1)]
-        return_range += [(start_map, y2-y1+start_map)]
-    # y1---x1---y2---x2
-    elif(y1 < x1) and (x1 < y2) and (x2 > y2):
-        
-        return_range += [(y2 + 1, x2)]
-        return_range += [(start_map + x1 - y1, start_map + y2 - y1)]
-    # x1y1---y2---x2
-    elif(x1 == y1) and (y2 < x2):
-        
-        return_range += [(y2 + 1, x2)]
-        return_range += [(start_map, start_map + y2 - y1)]
-    # y1---x1---x2y2
-    elif(x1 > y1) and (x2 == y2):
-        return_range += [(start_map + x1 - y1, start_map + y2 - y1)]
-    # x1---y1---y2---x2
-    elif(x1 < y1) and (x2 > y2):
-        return_range += [(x1, y1-1)]
-        
-        return_range += [(y2 + 1, x2)]
-        return_range += [(start_map, start_map + y2 - y1)]
-    # y1---x1---x2---y2
-    elif (x1 >= y1) and (x2 <= y2):
-        return_range += [(start_map + x1 - y1, start_map + x2 - y1)]
-    else:
-        return_range += [(x1, x2)]
-    return return_range
+def split_ranges(source_range, rule_range, translate_start):
+    x1 = source_range[0]
+    x2 = source_range[1]
+    y1 = rule_range[0]
+    y2 = rule_range[1]
+    # Check if source range is completely within compared range
+    # y1~x1---x2~y2
+    before_range = []
+    overlapped_range = []
+    after_range = []
+    if (x1 >= y1) and (x2 <= y2):
+        overlapped_range = [translate_start + (x1 - y1_, translate_start + (y2 - x2))]
+    
+    
+    return (before_range, overlapped_range, after_range)
 lowest_location = float('inf')
 
 

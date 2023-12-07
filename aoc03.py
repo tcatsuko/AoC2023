@@ -79,13 +79,8 @@ for idx, x in enumerate(schematic):
                 end_index = -1
 print('Part 1: sum of part numbers is ' + str(sum(parts)))
 gear_ratios = []
-
 for location in gears:
     parts = gears[location]
     if len(parts) == 2:
         gear_ratios += [int(parts[0]) * int(parts[1])]
 print('Part 2: sum of gear ratios is ' + str(sum(gear_ratios)))
-
-
-    
-

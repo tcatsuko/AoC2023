@@ -114,28 +114,33 @@ for line in f:
     raw_input += [[x for x in line[:-1]]]
 f.close()
 
-prev1 = 0
-prev2 = 0
-prev3 = 0
-prev4 = 0
-prev5 = 0
-# for cycle in range(1000000000):
-#     raw_input = move_rocks(raw_input, False)
-#     raw_input.reverse()
-#     rock_score = 0
-#     for y in range(len(raw_input)):
-#         current_row = raw_input[y]
-#         rock_score += ((current_row.count('O')) * (y + 1))
-#     raw_input.reverse()
-#     print(rock_score)
-#     prev5 = prev4
-#     prev4 = prev3
-#     prev3 = prev2
-#     prev2 = prev1
-#     prev1 = rock_score
-#     if (prev1 == prev2) and (prev2 == prev3) and (prev3 == prev4) and (prev4 == prev5):
-#         break
-# ***************************
-# MANUALLY OBSERVED CYCLE AND CALCULATED
-print('Part 2: after a bajillion cycles the beam supports 83790')
-#print('Part 2: rock score is ' + str(prev1))
+def map_to_string(rock_map):
+    output_string = ''
+    for line in rock_map:
+        output_string += ''.join(line)
+    return output_string
+
+rock_maps = []
+rock_scores = []
+for cycle in range(1000000000):
+    raw_input = move_rocks(raw_input, False)
+    raw_input.reverse()
+    rock_score = 0
+    for y in range(len(raw_input)):
+        current_row = raw_input[y]
+        rock_score += ((current_row.count('O')) * (y + 1))
+    raw_input.reverse()
+    map_string = map_to_string(raw_input)
+    if map_string in rock_maps:
+        current_cycle = cycle
+        start_cycle = rock_maps.index(map_string)
+        break
+    rock_maps += [map_string]
+    rock_scores += [rock_score]
+cycle_length = current_cycle - start_cycle
+leftover = 1000000000 - start_cycle
+final_index = start_cycle + (leftover % cycle_length) - 1
+final_score = rock_scores[final_index]
+
+print('Part 2: Rock score is ' + str(final_score))
+
